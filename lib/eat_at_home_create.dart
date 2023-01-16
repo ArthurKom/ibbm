@@ -13,6 +13,8 @@ class EatAtHomeCreatePage extends StatefulWidget {
 
 class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
   final List<bool> _selectedVisibility = <bool>[true, false];
+  final List<bool> _selectedDecisionProcess = <bool>[true, false];
+  final List<bool> _selectedLocation = <bool>[true, false];
   TextEditingController controller = TextEditingController();
 
   @override
@@ -41,7 +43,79 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                   thickness: 1,
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: 15.0,
+                ),
+                Text("Location"),
+                SizedBox(
+                  height: 5.0,
+                ),
+                ToggleButtons(
+                  direction: Axis.horizontal,
+                  onPressed: (int index) {
+                    setState(() {
+                      // The button that is tapped is set to true, and the others to false.
+                      for (int i = 0; i < _selectedLocation.length; i++) {
+                        _selectedLocation[i] = i == index;
+                      }
+                    });
+                  },
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  constraints: BoxConstraints(
+                    minHeight: 40.0,
+                    minWidth: width / 2 - 22,
+                  ),
+                  isSelected: _selectedLocation,
+                  children: [
+                    SizedBox(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [Text('At my place'), SizedBox(width: 5,), Icon(Icons.home)])),
+                    SizedBox(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [Text('At a restaurant'), SizedBox(width: 5,), Icon(Icons.restaurant)])),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text("Decision Process"),
+                SizedBox(
+                  height: 5.0,
+                ),
+                ToggleButtons(
+                  direction: Axis.horizontal,
+                  onPressed: (int index) {
+                    setState(() {
+                      // The button that is tapped is set to true, and the others to false.
+                      for (int i = 0; i < _selectedDecisionProcess.length; i++) {
+                        _selectedDecisionProcess[i] = i == index;
+                      }
+                    });
+                  },
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  constraints: BoxConstraints(
+                    minHeight: 40.0,
+                    minWidth: width / 2 - 22,
+                  ),
+                  isSelected: _selectedDecisionProcess,
+                  children: [
+                    SizedBox(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [Text('Match needs'), SizedBox(width: 5,), Icon(Icons.memory)])),
+                    SizedBox(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [Text('I decide'), SizedBox(width: 5,), Icon(Icons.person)])),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text("Visibility"),
+                SizedBox(
+                  height: 5.0,
                 ),
                 ToggleButtons(
                   direction: Axis.horizontal,

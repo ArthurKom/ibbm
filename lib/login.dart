@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swipe_eat/eat_at_home_create.dart';
+import 'package:swipe_eat/event_menu.dart';
 import 'register_base.dart';
 
 class LoginPage extends StatefulWidget {
@@ -126,7 +127,7 @@ class LoginState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EatAtHomeCreatePage()));
+                                  builder: (context) => EventMenuPage()));
                         },
                         child: const Text('Login'),
                         style: ElevatedButton.styleFrom(

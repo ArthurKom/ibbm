@@ -1,3 +1,4 @@
+import 'package:swipe_eat/event_view.dart';
 import 'package:swipe_eat/match_result.dart';
 
 import 'login.dart';
@@ -21,6 +22,6 @@ void main() {
          ThemeMode.dark for dark theme
       */
     debugShowCheckedModeBanner: false,
-    home: EatAtHomeCreatePage(),
+    home: LoginPage(),
   ));
 }
