@@ -22,7 +22,7 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Center(
+      body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(20),
           child: SingleChildScrollView(

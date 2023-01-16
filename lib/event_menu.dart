@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swipe_eat/eat_at_home_create.dart';
 import 'package:swipe_eat/event_preview.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -27,6 +28,7 @@ class EventMenuState extends State<EventMenuPage> {
       description: "This is my test description. Do you like it?",
       location: "Darmstadt",
       startTime: "16.01.2023 | 19:15",
+      displayType: DisplayType.Joinable,
     ),
     SizedBox(height: 15,),
     EventPreview(
@@ -34,6 +36,7 @@ class EventMenuState extends State<EventMenuPage> {
       description: "This is my second test description. Do you like it as well?",
       location: "Frankfurt",
       startTime: "20.02.2023 | 17:00",
+      displayType: DisplayType.Joinable,
     ),
   ];
 
@@ -45,10 +48,10 @@ class EventMenuState extends State<EventMenuPage> {
     EventPreview(
       name: "Test",
       description: "This is my test description. I am inviting you. Do you like it?",
-      location: "Darmstadt",
+      location: "Schustergasse 18, 64283 Darmstadt",
       startTime: "16.01.2023 | 19:15",
       organizer: "Tim",
-      isInvitation: true,
+      displayType: DisplayType.Invitation,
     ),
   ];
 
@@ -132,11 +135,11 @@ class EventMenuState extends State<EventMenuPage> {
                                   children: [Text('Invitations'), SizedBox(width: 5,), Icon(Icons.mail)])),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
                       // Search
                       if (_selectedMenu[0]) ...[
+                        SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           children: [
                             GestureDetector(
@@ -235,8 +238,25 @@ class EventMenuState extends State<EventMenuPage> {
                             // personal
                             if (_selectedMenu[1] == true) ...[
                               if (myEvents.isEmpty) ...[
-                                Text("You did not create or join any events.")
+                                Text("You did not create or join any events."),
+                                SizedBox(
+                                  height: 5,
+                                )
                               ],
+                              // personal
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EatAtHomeCreatePage())
+                                  );
+                                },
+                                child: Text("Create new"),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
                               for (var event in myEvents) event
                             ],
                             // invitations

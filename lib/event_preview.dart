@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
+import 'package:swipe_eat/event_view.dart';
 
 class EventPreview extends StatefulWidget {
   final String name;
@@ -7,21 +8,31 @@ class EventPreview extends StatefulWidget {
   final String startTime;
   final String location;
   final String organizer;
-  final bool isInvitation;
+  final DisplayType displayType;
 
-  const EventPreview({required this.name, required this.description,
-    required this.startTime, required this.location,
-    this.organizer = "", this.isInvitation = false }) : super(key: null);
+  const EventPreview(
+      {required this.name,
+      required this.description,
+      required this.startTime,
+      required this.location,
+      this.organizer = "",
+      required this.displayType})
+      : super(key: null);
 
   @override
   State<StatefulWidget> createState() => EventPreviewState();
 }
 
+enum DisplayType { Invitation, Joinable, Details }
+
 class EventPreviewState extends State<EventPreview> {
+  bool isVisible = true;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Visibility(
+      visible: isVisible,
+      child: Container(
         padding: EdgeInsets.all(10),
         constraints: BoxConstraints(minHeight: 50),
         alignment: Alignment.center,
@@ -58,100 +69,149 @@ class EventPreviewState extends State<EventPreview> {
                   trim: 2, // trims if text exceeds more than 2 lines
                 ),
               ),
-              SizedBox(height: 5,),
+              SizedBox(
+                height: 5,
+              ),
             ],
             if (widget.organizer != "") ...[
-              SizedBox(height: 5,),
+              SizedBox(
+                height: 5,
+              ),
               Row(
                 children: [
                   Icon(Icons.person),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Flexible(
                     child: Text(
                       widget.organizer,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14
-                      ),
+                      style: TextStyle(color: Colors.black, fontSize: 14),
                     ),
                   ),
                 ],
               ),
             ],
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             Row(
               children: [
                 Icon(Icons.watch_later),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Flexible(
                   child: Text(
                     widget.startTime,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14
-                    ),
+                    style: TextStyle(color: Colors.black, fontSize: 14),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             Row(
               children: [
                 Icon(Icons.location_pin),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Flexible(
                   child: Text(
                     widget.location,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14
-                    ),
+                    style: TextStyle(color: Colors.black, fontSize: 14),
                   ),
                 ),
               ],
             ),
-            if (widget.isInvitation) ...[
+            if (widget.displayType == DisplayType.Joinable) ...[
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventViewPage(
+                              name: widget.name,
+                              description: widget.description,
+                              startTime: widget.startTime,
+                              location: widget.location,
+                              organizer: widget.organizer,
+                            )
+                          )
+                        );
+                      },
+                      child: Text("Join")),
+                  ),
+                ],
+              )
+            ] else if (widget.displayType == DisplayType.Invitation) ...[
               Divider(
                 color: Colors.black54,
                 thickness: 1,
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 0),
-                decoration: BoxDecoration(
-                ),
+                decoration: BoxDecoration(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
                       onTap: () {
-
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventViewPage(
+                              name: widget.name,
+                              description: widget.description,
+                              startTime: widget.startTime,
+                              location: widget.location,
+                              organizer: widget.organizer,
+                            )
+                          )
+                        );
                       },
                       child: Row(
                         children: [
                           Icon(Icons.check, color: Colors.green),
-                          SizedBox(width: 5,),
+                          SizedBox(
+                            width: 5,
+                          ),
                           Text("Accept"),
                         ],
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-
-                      },
-                      child: Row(
-                        children: [
-                          Icon(Icons.close, color: Colors.red,),
-                          SizedBox(width: 5,),
-                          Text("Decline"),
-                        ],
-                      )
-                    ),
+                        onTap: () {
+                          setState(() {
+                            isVisible = false;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text("Decline"),
+                          ],
+                        )),
                   ],
                 ),
               )
             ],
           ],
-        )
-      );
+        )),
+    );
   }
 }

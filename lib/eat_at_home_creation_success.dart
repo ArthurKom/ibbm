@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swipe_eat/event_view.dart';
 import 'login.dart';
 
 class EatAtHomeCreationSuccessPage extends StatefulWidget {
@@ -57,9 +58,16 @@ class EatAtHomeCreationSuccessState extends State<EatAtHomeCreationSuccessPage> 
                         child: ElevatedButton(
                             onPressed: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EventViewPage(
+                                    name: "Test",
+                                    description: "Test Description",
+                                    startTime: "Test Date",
+                                    location: "Test Location"
+                                  )
+                                )
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: Size(100, 45),

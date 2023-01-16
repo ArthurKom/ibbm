@@ -39,26 +39,6 @@ class RegisterRestaurantTagState extends State<RegisterRestaurantTagPage> {
                 SizedBox(
                   height: 20.0,
                 ),
-                Container(
-                  constraints: BoxConstraints(
-                      minHeight: 50
-                  ),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                        width: 1,
-                        color: Colors.black54
-                    ),
-                  ),
-                  child: Wrap(
-                      children: selectedTags.length > 0 ?
-                      selectedTags : [Text("No tags selected.")]
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
                 FoodTagSelection(),
                 SizedBox(
                   height: 20.0,
