@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:swipe_eat/event_invite.dart';
 import 'package:swipe_eat/event_menu.dart';
 import 'package:tuple/tuple.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -42,7 +44,7 @@ class EventViewPage extends StatefulWidget {
 }
 
 class EventViewState extends State<EventViewPage> {
-  final List<bool> _selectedMenu = <bool>[true, false, false, false, false];
+  final List<bool> _selectedMenu = <bool>[true, false, false, false];
   TextEditingController messageController = TextEditingController();
 
   @override
@@ -104,7 +106,7 @@ class EventViewState extends State<EventViewPage> {
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(8)),
                             constraints: BoxConstraints(
-                              minWidth: (width / 5) - 9.6,
+                              minWidth: (width / 4) - 12,
                               minHeight: 40.0,
                             ),
                             isSelected: _selectedMenu,
@@ -143,16 +145,7 @@ class EventViewState extends State<EventViewPage> {
                                           MainAxisAlignment.center,
                                       children: [
                                         /*Text('Edit'), SizedBox(width: 3,),*/
-                                        Icon(Icons.edit)
-                                      ])),
-                              Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        /*Text('Delete'), SizedBox(width: 3,),*/
-                                        Icon(Icons.delete)
+                                        Icon(Icons.settings)
                                       ])),
                             ],
                           ),
@@ -238,7 +231,7 @@ class EventViewState extends State<EventViewPage> {
                                               ),
                                             ),
                                             onTap: () => launchUrlString(
-                                                "https://www.google.com/maps/search/?api=1&query=Schustergasse+18%2C+64283+Darmstadt")),
+                                                "https://www.google.com/maps/search/?api=1&query=" + Uri.encodeComponent(widget.location))),
                                       )
                                     ],
                                   ),
@@ -325,7 +318,126 @@ class EventViewState extends State<EventViewPage> {
                                       ),
                                     ),
                                   ],
+                                ),
+                                Divider(
+                                  height: 15,
+                                  thickness: 1,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(Icons.person),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Flexible(
+                                      child: InkWell(
+                                        child: Text(
+                                          "Jonas",
+                                          textScaleFactor: 1.2,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  height: 15,
+                                  thickness: 1,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(Icons.person),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Flexible(
+                                      child: InkWell(
+                                        child: Text(
+                                          "Peter",
+                                          textScaleFactor: 1.2,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20,),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => EventInvitePage()));
+                                        },
+                                        child: Text("Invite"),
+                                      ),
+                                    )
+                                  ],
                                 )
+                              ],
+                            )
+                          ],
+                          if (_selectedMenu[3]) ...[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => EventMenuPage()));
+                                        },
+                                        child: const Text('Edit'),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.orange,
+                                          minimumSize: Size(100, 45),
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.all(Radius.circular(10)),
+                                          ),
+                                        )
+                                      )
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  height: 15,
+                                  thickness: 1,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => EventMenuPage()));
+                                        },
+                                        child: const Text('Delete'),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red,
+                                          minimumSize: Size(100, 45),
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.all(Radius.circular(10)),
+                                          ),
+                                        )
+                                      )
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  height: 15,
+                                  thickness: 1,
+                                ),
                               ],
                             )
                           ]

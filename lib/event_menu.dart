@@ -4,6 +4,40 @@ import 'package:swipe_eat/event_preview.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+class EventMenuModel {
+  static List<Widget> globalEvents = [
+    EventPreview(
+      name: "Test",
+      description: "This is my test description. Do you like it?",
+      location: "Darmstadt",
+      startTime: "16.01.2023 | 19:15",
+      displayType: DisplayType.Joinable,
+    ),
+    EventPreview(
+      name: "Test 2",
+      description: "This is my second test description. Do you like it as well?",
+      location: "Frankfurt",
+      startTime: "20.02.2023 | 17:00",
+      displayType: DisplayType.Joinable,
+    ),
+  ];
+
+  static List<Widget> invitations = [
+    EventPreview(
+      name: "Test",
+      description: "This is my test description. I am inviting you. Do you like it?",
+      location: "Schustergasse 18, 64283 Darmstadt",
+      startTime: "16.01.2023 | 19:15",
+      organizer: "Tim",
+      displayType: DisplayType.Invitation,
+    ),
+  ];
+
+  static List<Widget> myEvents = [
+
+  ];
+}
+
 class EventMenuPage extends StatefulWidget {
   @override
   EventMenuState createState() => EventMenuState();
@@ -22,38 +56,7 @@ class EventMenuState extends State<EventMenuPage> {
     '10 km',
   ];
 
-  List<Widget> globalEvents = [
-    EventPreview(
-      name: "Test",
-      description: "This is my test description. Do you like it?",
-      location: "Darmstadt",
-      startTime: "16.01.2023 | 19:15",
-      displayType: DisplayType.Joinable,
-    ),
-    SizedBox(height: 15,),
-    EventPreview(
-      name: "Test 2",
-      description: "This is my second test description. Do you like it as well?",
-      location: "Frankfurt",
-      startTime: "20.02.2023 | 17:00",
-      displayType: DisplayType.Joinable,
-    ),
-  ];
-
-  List<Widget> myEvents = [
-
-  ];
-
-  List<Widget> invitations = [
-    EventPreview(
-      name: "Test",
-      description: "This is my test description. I am inviting you. Do you like it?",
-      location: "Schustergasse 18, 64283 Darmstadt",
-      startTime: "16.01.2023 | 19:15",
-      organizer: "Tim",
-      displayType: DisplayType.Invitation,
-    ),
-  ];
+  int navigationIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +65,7 @@ class EventMenuState extends State<EventMenuPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -76,6 +79,7 @@ class EventMenuState extends State<EventMenuPage> {
                   ),
                   child: Column(
                     children: [
+                      SizedBox(height: 20,),
                       Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -230,41 +234,82 @@ class EventMenuState extends State<EventMenuPage> {
                           children: [
                             // search
                             if (_selectedMenu[0] == true) ...[
-                              if (globalEvents.isEmpty) ...[
-                                Text("There are no events in your selected area.")
+                              if (EventMenuModel.globalEvents.isEmpty) ...[
+                                SizedBox(height: 10,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("There are no events in your selected area.",)
+                                  ],
+                                )
                               ],
-                              for (var event in globalEvents) event
+                              for (var event in EventMenuModel.globalEvents)  Column(
+                                children: [
+                                  event,
+                                  SizedBox(height: 15,),
+                                ],
+                              )
                             ],
                             // personal
                             if (_selectedMenu[1] == true) ...[
-                              if (myEvents.isEmpty) ...[
+                              if (EventMenuModel.myEvents.isEmpty) ...[
                                 Text("You did not create or join any events."),
                                 SizedBox(
                                   height: 5,
                                 )
                               ],
-                              // personal
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => EatAtHomeCreatePage())
-                                  );
-                                },
-                                child: Text("Create new"),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => EatAtHomeCreatePage())
+                                        );
+                                      },
+                                      child: Text("Create"),
+                                    )
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => EatAtHomeCreatePage())
+                                          );
+                                        },
+                                        child: Text("Join"),
+                                      )
+                                  ),
+                                ],
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              for (var event in myEvents) event
+                              for (var event in EventMenuModel.myEvents) Column(
+                                children: [
+                                  event,
+                                  SizedBox(height: 15,),
+                                ],
+                              )
                             ],
                             // invitations
                             if (_selectedMenu[2] == true) ...[
-                              if (invitations.isEmpty) ...[
+                              if (EventMenuModel.invitations.isEmpty) ...[
                                 Text("You have not received any invitations.")
                               ],
-                              for (var event in invitations) event
+                              for (var event in EventMenuModel.invitations) Column(
+                                children: [
+                                  event,
+                                  SizedBox(height: 15,),
+                                ],
+                              )
                             ],
                           ],
                         ),
@@ -276,7 +321,39 @@ class EventMenuState extends State<EventMenuPage> {
             ),
           ),
         ),
-      )
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) {
+          if (navigationIndex == 0) {
+
+          }
+          else if (navigationIndex == 1) {
+
+          }
+          else if (navigationIndex == 2) {
+
+          }
+        },
+        currentIndex: 0,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.event_note),
+            label: 'Events',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.group),
+            label: 'Contacts',
+          ),
+          /*BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chats',
+          ),*/
+        ],
+      ),
     );
   }
 }

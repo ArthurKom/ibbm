@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
+import 'package:swipe_eat/event_menu.dart';
 import 'package:swipe_eat/event_view.dart';
 
 class EventPreview extends StatefulWidget {
@@ -8,16 +9,16 @@ class EventPreview extends StatefulWidget {
   final String startTime;
   final String location;
   final String organizer;
-  final DisplayType displayType;
+  DisplayType displayType;
 
-  const EventPreview(
-      {required this.name,
-      required this.description,
-      required this.startTime,
-      required this.location,
-      this.organizer = "",
-      required this.displayType})
-      : super(key: null);
+  EventPreview(
+    {required this.name,
+    required this.description,
+    required this.startTime,
+    required this.location,
+    this.organizer = "",
+    required this.displayType})
+    : super(key: null);
 
   @override
   State<StatefulWidget> createState() => EventPreviewState();
@@ -135,6 +136,11 @@ class EventPreviewState extends State<EventPreview> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
+                        setState(() {
+                          widget.displayType = DisplayType.Details;
+                        });
+                        EventMenuModel.myEvents.add(widget);
+                        EventMenuModel.globalEvents.remove(widget);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -152,7 +158,35 @@ class EventPreviewState extends State<EventPreview> {
                   ),
                 ],
               )
-            ] else if (widget.displayType == DisplayType.Invitation) ...[
+            ]
+            else if (widget.displayType == DisplayType.Details) ...[
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventViewPage(
+                              name: widget.name,
+                              description: widget.description,
+                              startTime: widget.startTime,
+                              location: widget.location,
+                              organizer: widget.organizer,
+                            )
+                          )
+                        );
+                      },
+                      child: Text("Details")),
+                  ),
+                ],
+              )
+            ]
+            else if (widget.displayType == DisplayType.Invitation) ...[
               Divider(
                 color: Colors.black54,
                 thickness: 1,
@@ -165,6 +199,11 @@ class EventPreviewState extends State<EventPreview> {
                   children: [
                     GestureDetector(
                       onTap: () {
+                        setState(() {
+                          widget.displayType = DisplayType.Details;
+                        });
+                        EventMenuModel.myEvents.add(widget);
+                        EventMenuModel.invitations.remove(widget);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
