@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swipe_eat/eat_at_home_create.dart';
-import 'package:swipe_eat/event_menu.dart';
-import 'register_base.dart';
 
 class EventInvitePage extends StatefulWidget {
   List<String> options = [
@@ -152,7 +149,7 @@ class EventInviteState extends State<EventInvitePage> {
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                         ),
-                        child: Text("Add")),
+                        child: Text("Invite")),
                   ]),
                   SizedBox(
                     height: 20.0,

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:swipe_eat/eat_at_home_tag.dart';
-import 'package:swipe_eat/login.dart';
-import 'register_base.dart';
-import 'tag_selection.dart';
+import 'package:swipe_eat/events/event_tag.dart';
+import 'package:swipe_eat/authentication/login.dart';
 
 class EatAtHomeCreatePage extends StatefulWidget {
   @override
@@ -31,11 +29,14 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Create Event',
-                      style: TextStyle(
-                          fontSize: 25.0, fontWeight: FontWeight.bold),
-                    ),
+                    BackButton(),
+                    Expanded(
+                      child: Text(
+                        'Create Event',
+                        style: TextStyle(
+                            fontSize: 25.0, fontWeight: FontWeight.bold),
+                      ),
+                    )
                   ],
                 ),
                 Divider(

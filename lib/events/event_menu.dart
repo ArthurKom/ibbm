@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:swipe_eat/eat_at_home_create.dart';
-import 'package:swipe_eat/event_preview.dart';
+import 'package:flutter/services.dart';
+import 'package:swipe_eat/events/event_create.dart';
+import 'event_join.dart';
+import 'event_preview.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../navigation_bar.dart';
 
 class EventMenuModel {
   static List<Widget> globalEvents = [
@@ -11,14 +15,42 @@ class EventMenuModel {
       description: "This is my test description. Do you like it?",
       location: "Darmstadt",
       startTime: "16.01.2023 | 19:15",
-      displayType: DisplayType.Joinable,
+      displayType: DisplayType.Details,
     ),
     EventPreview(
       name: "Test 2",
       description: "This is my second test description. Do you like it as well?",
       location: "Frankfurt",
       startTime: "20.02.2023 | 17:00",
-      displayType: DisplayType.Joinable,
+      displayType: DisplayType.Details,
+    ),
+    EventPreview(
+      name: "Test",
+      description: "This is my test description. Do you like it?",
+      location: "Darmstadt",
+      startTime: "16.01.2023 | 19:15",
+      displayType: DisplayType.Details,
+    ),
+    EventPreview(
+      name: "Test 2",
+      description: "This is my second test description. Do you like it as well?",
+      location: "Frankfurt",
+      startTime: "20.02.2023 | 17:00",
+      displayType: DisplayType.Details,
+    ),
+    EventPreview(
+      name: "Test",
+      description: "This is my test description. Do you like it?",
+      location: "Darmstadt",
+      startTime: "16.01.2023 | 19:15",
+      displayType: DisplayType.Details,
+    ),
+    EventPreview(
+      name: "Test 2",
+      description: "This is my second test description. Do you like it as well?",
+      location: "Frankfurt",
+      startTime: "20.02.2023 | 17:00",
+      displayType: DisplayType.Details,
     ),
   ];
 
@@ -30,6 +62,22 @@ class EventMenuModel {
       startTime: "16.01.2023 | 19:15",
       organizer: "Tim",
       displayType: DisplayType.Invitation,
+    ),
+    EventPreview(
+      name: "Request - Arthur",
+      description: "Arthur would like to join your event.",
+      location: "Schustergasse 18, 64283 Darmstadt",
+      startTime: "16.01.2023 | 19:15",
+      organizer: "You",
+      displayType: DisplayType.ReceivedRequest,
+    ),
+    EventPreview(
+      name: "Your request",
+      description: "You would like to join the event of Tim.",
+      location: "Waldstrasse 18, 64283 Darmstadt",
+      startTime: "16.01.2023 | 19:15",
+      organizer: "Tim",
+      displayType: DisplayType.SendRequest,
     ),
   ];
 
@@ -281,7 +329,7 @@ class EventMenuState extends State<EventMenuPage> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => EatAtHomeCreatePage())
+                                                  builder: (context) => JoinGroup())
                                           );
                                         },
                                         child: Text("Join"),
@@ -322,37 +370,12 @@ class EventMenuState extends State<EventMenuPage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
-          if (navigationIndex == 0) {
-
-          }
-          else if (navigationIndex == 1) {
-
-          }
-          else if (navigationIndex == 2) {
-
-          }
-        },
-        currentIndex: 0,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.event_note),
-            label: 'Events',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Contacts',
-          ),
-          /*BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chats',
-          ),*/
-        ],
+      /*floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () { },
+      ),*/
+      bottomNavigationBar: Navbar(
+        navigationIndex: 1,
       ),
     );
   }

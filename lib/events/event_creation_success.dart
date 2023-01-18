@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swipe_eat/event_view.dart';
-import 'login.dart';
+import 'event_view.dart';
 
 class EatAtHomeCreationSuccessPage extends StatefulWidget {
   @override

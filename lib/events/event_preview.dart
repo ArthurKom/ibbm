@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
-import 'package:swipe_eat/event_menu.dart';
-import 'package:swipe_eat/event_view.dart';
+import 'event_menu.dart';
+import 'event_view.dart';
 
 class EventPreview extends StatefulWidget {
   final String name;
@@ -24,7 +24,7 @@ class EventPreview extends StatefulWidget {
   State<StatefulWidget> createState() => EventPreviewState();
 }
 
-enum DisplayType { Invitation, Joinable, Details }
+enum DisplayType { Invitation, Joinable, Details, SendRequest, ReceivedRequest }
 
 class EventPreviewState extends State<EventPreview> {
   bool isVisible = true;
@@ -38,6 +38,14 @@ class EventPreviewState extends State<EventPreview> {
         constraints: BoxConstraints(minHeight: 50),
         alignment: Alignment.center,
         decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Colors.blue.shade50,
+              Colors.white,
+            ],
+          ),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(width: 1, color: Colors.black54),
         ),
@@ -154,7 +162,7 @@ class EventPreviewState extends State<EventPreview> {
                           )
                         );
                       },
-                      child: Text("Join")),
+                      child: Text("Request Join")),
                   ),
                 ],
               )
@@ -186,7 +194,8 @@ class EventPreviewState extends State<EventPreview> {
                 ],
               )
             ]
-            else if (widget.displayType == DisplayType.Invitation) ...[
+            else if (widget.displayType == DisplayType.Invitation ||
+                  widget.displayType == DisplayType.ReceivedRequest) ...[
               Divider(
                 color: Colors.black54,
                 thickness: 1,
@@ -247,8 +256,41 @@ class EventPreviewState extends State<EventPreview> {
                         )),
                   ],
                 ),
-              )
-            ],
+              ),
+            ]
+              else if (widget.displayType == DisplayType.SendRequest) ...[
+                  Divider(
+                    color: Colors.black54,
+                    thickness: 1,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 0),
+                    decoration: BoxDecoration(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isVisible = false;
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text("Withdraw"),
+                              ],
+                            )),
+                      ],
+                    ),
+                  ),
+                ]
           ],
         )),
     );

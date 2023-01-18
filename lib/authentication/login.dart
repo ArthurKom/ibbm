@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swipe_eat/eat_at_home_create.dart';
-import 'package:swipe_eat/event_menu.dart';
+import '../events/event_menu.dart';
 import 'register_base.dart';
 
 class LoginPage extends StatefulWidget {

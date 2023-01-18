@@ -2,13 +2,10 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:swipe_eat/event_invite.dart';
-import 'package:swipe_eat/event_menu.dart';
+import 'package:swipe_eat/events/event_invite.dart';
+import 'event_menu.dart';
 import 'package:tuple/tuple.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
-import 'event_preview.dart';
 
 class EventViewPage extends StatefulWidget {
   final String name;

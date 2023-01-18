@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swipe_eat/eat_at_home_create.dart';
-import 'package:swipe_eat/eat_at_home_creation_success.dart';
-import 'package:swipe_eat/login.dart';
-import 'register_base.dart';
-import 'tag_selection.dart';
+import 'package:swipe_eat/events/event_create.dart';
+import 'package:swipe_eat/events/event_creation_success.dart';
+import '../tag_selection.dart';
 
 class EatAtHomeTagPage extends StatefulWidget {
   @override
