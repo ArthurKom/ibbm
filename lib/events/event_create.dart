@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:swipe_eat/events/event_list.dart';
+import 'package:swipe_eat/events/event_preview.dart';
 import 'package:swipe_eat/events/event_tag.dart';
 import 'package:swipe_eat/authentication/login.dart';
+import 'package:swipe_eat/events/events.dart';
 
-class EatAtHomeCreatePage extends StatefulWidget {
+import 'event_creation_success.dart';
+
+class EventCreatePage extends StatefulWidget {
   @override
-  EatAtHomeCreateState createState() => EatAtHomeCreateState();
+  EventCreateState createState() => EventCreateState();
 }
 
-class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
+class EventCreateState extends State<EventCreatePage> {
   final List<bool> _selectedVisibility = <bool>[true, false];
   final List<bool> _selectedDecisionProcess = <bool>[true, false];
   final List<bool> _selectedLocation = <bool>[true, false];
   TextEditingController controller = TextEditingController();
+
+  String name = "";
+  String description = "";
+  String startingTime = "";
+  String city = "";
+  String areaCode = "";
+  String streetAndHouseNumber = "";
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +34,30 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               children: [
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    BackButton(),
+                    SizedBox(
+                      width: 40,
+                      child: BackButton(),
+                    ),
                     Expanded(
                       child: Text(
+                        textAlign: TextAlign.center,
                         'Create Event',
                         style: TextStyle(
                             fontSize: 25.0, fontWeight: FontWeight.bold),
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      width: 40,
+                    ),
                   ],
                 ),
                 Divider(
@@ -173,6 +194,11 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      name = value;
+                    });
+                  },
                 ),
                 SizedBox(
                   height: 20.0,
@@ -191,6 +217,11 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      description = value;
+                    });
+                  },
                 ),
                 SizedBox(
                   height: 20.0,
@@ -204,7 +235,10 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                         minTime: DateTime.now(),
                         maxTime: DateTime.now().add(Duration(days: 365 * 2)),
                         onConfirm: (date) {
-                          controller.text = DateFormat('yyyy-MM-dd | kk:mm').format(date);
+                          setState(() {
+                            startingTime = DateFormat('yyyy-MM-dd | kk:mm').format(date);
+                            controller.text = DateFormat('yyyy-MM-dd | kk:mm').format(date);
+                          });
                         },
                         currentTime: DateTime.now(),
                         locale: LocaleType.de);
@@ -236,6 +270,11 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      city = value;
+                    });
+                  },
                 ),
                 SizedBox(
                   height: 20.0,
@@ -253,6 +292,11 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      areaCode = value;
+                    });
+                  },
                 ),
                 SizedBox(
                   height: 20.0,
@@ -270,6 +314,11 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      streetAndHouseNumber = value;
+                    });
+                  },
                 ),
                 SizedBox(
                   height: 20.0,
@@ -283,7 +332,7 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginPage()));
+                                      builder: (context) => MyEventPage()));
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: Size(100, 45),
@@ -299,6 +348,21 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                     Expanded(
                         child: ElevatedButton(
                             onPressed: () {
+                              EventCreationModel.name = name;
+                              EventCreationModel.description = description;
+                              EventCreationModel.startingTime = startingTime;
+                              EventCreationModel.location = streetAndHouseNumber
+                                  + ", " + areaCode + " " + city;
+                              EventMenuModel.myEvents.add(
+                                EventPreview(
+                                    name: name,
+                                    description: description,
+                                    startTime: startingTime,
+                                    location: streetAndHouseNumber
+                                        + ", " + areaCode + " " + city,
+                                    displayType: DisplayType.Details
+                                )
+                              );
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -311,8 +375,12 @@ class EatAtHomeCreateState extends State<EatAtHomeCreatePage> {
                                 BorderRadius.all(Radius.circular(10)),
                               ),
                             ),
-                            child: Text("Continue"))),
+                            child: Text("Continue"))
+                    ),
                   ],
+                ),
+                SizedBox(
+                  height: 20,
                 ),
               ],
             ),

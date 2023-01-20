@@ -19,6 +19,7 @@ class EatAtHomeTagState extends State<EatAtHomeTagPage> {
         child: Container(
           padding: EdgeInsets.all(20),
           child: SingleChildScrollView(
+            clipBehavior: Clip.none,
             child: Column(
               children: [
                 Row(
@@ -55,7 +56,7 @@ class EatAtHomeTagState extends State<EatAtHomeTagPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EatAtHomeCreatePage()));
+                                      builder: (context) => EventCreatePage()));
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: Size(100, 45),

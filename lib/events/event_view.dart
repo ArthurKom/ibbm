@@ -3,7 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:swipe_eat/events/event_invite.dart';
-import 'event_menu.dart';
+import 'package:swipe_eat/events/event_list.dart';
+import 'events.dart';
 import 'package:tuple/tuple.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -55,6 +56,7 @@ class EventViewState extends State<EventViewPage> {
             Container(
               padding: EdgeInsets.all(20),
               child: SingleChildScrollView(
+                clipBehavior: Clip.none,
                 child: Column(
                   children: [
                     Container(
@@ -67,9 +69,19 @@ class EventViewState extends State<EventViewPage> {
                         children: [
                           Container(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                SizedBox(
+                                  width: 40,
+                                  child: BackButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => MyEventPage()));
+                                    },
+                                  ),
+                                ),
                                 Expanded(
                                     child: Text(
                                   textAlign: TextAlign.center,
@@ -78,6 +90,9 @@ class EventViewState extends State<EventViewPage> {
                                       fontSize: 21.0,
                                       fontWeight: FontWeight.bold),
                                 )),
+                                SizedBox(
+                                  width: 40,
+                                ),
                               ],
                             ),
                           ),
@@ -356,7 +371,7 @@ class EventViewState extends State<EventViewPage> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 20,),
+                                SizedBox(height: 10,),
                                 Row(
                                   children: [
                                     Flexible(
@@ -388,7 +403,7 @@ class EventViewState extends State<EventViewPage> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => EventMenuPage()));
+                                                  builder: (context) => MyEventPage()));
                                         },
                                         child: const Text('Edit'),
                                         style: ElevatedButton.styleFrom(
@@ -416,7 +431,7 @@ class EventViewState extends State<EventViewPage> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => EventMenuPage()));
+                                                  builder: (context) => MyEventPage()));
                                         },
                                         child: const Text('Delete'),
                                         style: ElevatedButton.styleFrom(
@@ -441,38 +456,6 @@ class EventViewState extends State<EventViewPage> {
                         ],
                       ),
                     ),
-                    if (_selectedMenu[0]) ...[
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                EventMenuPage()));
-                                  },
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Text('Back'),
-                                      ]),
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(100, 45),
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                    ),
-                                  )))
-                        ],
-                      ),
-                    ],
                   ],
                 ),
               ),

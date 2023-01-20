@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
+import 'package:swipe_eat/events/event_search.dart';
 
 class ShadowContainer extends StatelessWidget {
   final Widget child;
@@ -62,38 +63,66 @@ class _JoinGroupState extends State<JoinGroup> {
             ),
           ),
           const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Join Event',
+                style: TextStyle(
+                    fontSize: 25.0, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          Divider(
+            color: Theme.of(context).colorScheme.primary,
+            thickness: 1,
+            indent: 20,
+            endIndent: 20,
+          ),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: ShadowContainer(
+            child: Container(
               key: keyparam,
               child: Column(
                 children: <Widget>[
-                  TextFormField(
-                    controller: _groupIdController,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.group),
-                      hintText: "Group Id",
+                  TextField(
+                    decoration: InputDecoration(
+                      isDense: true,
+                      // important line
+                      contentPadding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      // control your hints text size
+                      hintText: 'Invitation Code',
+                      suffixIcon: Icon(Icons.abc),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
                   ),
                   const SizedBox(
                     height: 20.0,
                   ),
-                  ElevatedButton(
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 100),
-                      child: Text(
-                        "Join",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                        ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EventSearchPage()));
+                              },
+                              child: const Text('Join'),
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(100, 45),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                                ),
+                              )
+                          )
                       ),
-                    ),
-                    onPressed: () {
-                      _joinGroup(context, _groupIdController.text);
-                    },
-                  ),
+                    ],
+                  )
                 ],
               ),
             ),

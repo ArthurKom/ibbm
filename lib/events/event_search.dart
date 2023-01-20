@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:swipe_eat/navigation_bar.dart';
-import 'event_menu.dart';
+import 'events.dart';
 import 'event_preview.dart';
 
 class EventSearchPage extends StatefulWidget {
   @override
-  EventMenuState createState() => EventMenuState();
+  EventSearchState createState() => EventSearchState();
 }
 
-class EventMenuState extends State<EventSearchPage> {
+class EventSearchState extends State<EventSearchPage> {
   bool radiusDropDownExpanded = false;
   String radius = "3 km";
   List<String> radiusList = [
@@ -30,15 +30,14 @@ class EventMenuState extends State<EventSearchPage> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
+            clipBehavior: Clip.none,
             child: Column(
               children: [
                 Container(
                   width: width - 22,
                   decoration: BoxDecoration(
-                    // add border
-                      border: Border.all(width: 1, color: Colors.transparent),
-                      // set border radius
-                      borderRadius: BorderRadius.all(Radius.circular(10))
+                    border: Border.all(width: 1, color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(10))
                   ),
                   child: Column(
                     children: [
@@ -49,12 +48,12 @@ class EventMenuState extends State<EventSearchPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Expanded(
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  'Search',
-                                  style: TextStyle(
-                                      fontSize: 21.0, fontWeight: FontWeight.bold),
-                                )
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                'Search',
+                                style: TextStyle(
+                                    fontSize: 21.0, fontWeight: FontWeight.bold),
+                              )
                             ),
                           ],
                         ),

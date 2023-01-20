@@ -27,12 +27,22 @@ class EventInviteState extends State<EventInvitePage> {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Invite',
-                        style: TextStyle(
-                            fontSize: 25.0, fontWeight: FontWeight.bold),
+                      SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: BackButton(),
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Invite',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 25.0, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 40,
                       ),
                     ],
                   ),
@@ -41,27 +51,30 @@ class EventInviteState extends State<EventInvitePage> {
                     thickness: 1,
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 40.0,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        "Invitation Code: ",
-                        style: TextStyle(
-                          fontSize: 18
-                        ),
+                  Center(
+                    child: Text(
+                      "Invite via code: ",
+                      style: TextStyle(
+                        fontSize: 18
                       ),
-                      Text(
-                        "ABCDEFG",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 10,
+                  ),
+                  Center(
+                    child: Text(
+                      "ABCDEFG",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 40,
                   ),
                   Row(
                     children: [
@@ -86,7 +99,17 @@ class EventInviteState extends State<EventInvitePage> {
                     ],
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 40,
+                  ),
+                  Text(
+                    "Invite your contacts: ",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontSize: 18
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
                   ),
                   Row(children: [
                     Expanded(

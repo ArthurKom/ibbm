@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'event_view.dart';
 
+class EventCreationModel {
+  static String name = "";
+  static String location = "";
+  static String description = "";
+  static String startingTime = "";
+}
+
 class EatAtHomeCreationSuccessPage extends StatefulWidget {
   @override
   EatAtHomeCreationSuccessState createState() => EatAtHomeCreationSuccessState();
@@ -60,10 +67,10 @@ class EatAtHomeCreationSuccessState extends State<EatAtHomeCreationSuccessPage> 
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => EventViewPage(
-                                    name: "Test",
-                                    description: "Test Description",
-                                    startTime: "Test Date",
-                                    location: "Test Location"
+                                    name: EventCreationModel.name,
+                                    description: EventCreationModel.description,
+                                    startTime: EventCreationModel.startingTime,
+                                    location: EventCreationModel.location,
                                   )
                                 )
                               );

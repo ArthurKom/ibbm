@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../navigation_bar.dart';
-import 'event_menu.dart';
+import 'events.dart';
 
 class EventInvitationsPage extends StatefulWidget {
   @override
@@ -20,6 +20,7 @@ class EventInvitationsState extends State<EventInvitationsPage> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
+            clipBehavior: Clip.none,
             child: Column(
               children: [
                 Container(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:swipe_eat/events/event_create.dart';
 import 'event_join.dart';
 
 import '../navigation_bar.dart';
-import 'event_menu.dart';
+import 'events.dart';
+import 'event_search.dart';
 
 class MyEventPage extends StatefulWidget {
   @override
@@ -12,6 +14,8 @@ class MyEventPage extends StatefulWidget {
 }
 
 class MyEventState extends State<MyEventPage> {
+  ValueNotifier<bool> isDialOpen = ValueNotifier<bool>(false);
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -21,20 +25,17 @@ class MyEventState extends State<MyEventPage> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
+            clipBehavior: Clip.antiAlias,
             child: Column(
               children: [
                 Container(
                   width: width - 22,
                   decoration: BoxDecoration(
-                      // add border
-                      border: Border.all(width: 1, color: Colors.transparent),
-                      // set border radius
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                    border: Border.all(width: 1, color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 20,
-                      ),
+                      SizedBox(height: 20,),
                       Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,7 +47,8 @@ class MyEventState extends State<MyEventPage> {
                               'My Events',
                               style: TextStyle(
                                   fontSize: 21.0, fontWeight: FontWeight.bold),
-                            )),
+                              )
+                            ),
                           ],
                         ),
                       ),
@@ -62,34 +64,6 @@ class MyEventState extends State<MyEventPage> {
                       Container(
                         child: Column(
                           children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                    child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                EatAtHomeCreatePage()));
-                                  },
-                                  child: Text("Create"),
-                                )),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Expanded(
-                                    child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => JoinGroup()));
-                                  },
-                                  child: Text("Join"),
-                                )),
-                              ],
-                            ),
                             if (EventMenuModel.myEvents.isEmpty) ...[
                               SizedBox(
                                 height: 5,
@@ -119,11 +93,48 @@ class MyEventState extends State<MyEventPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
-        child: Icon(Icons.add),
+      floatingActionButton: SpeedDial(
+        buttonSize: Size.square(50),
+        icon: Icons.add,
+        activeIcon: Icons.close,
+        openCloseDial: isDialOpen,
+        label: const Text("New"),
+        activeLabel: const Text("Close"),
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.create),
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            label: 'Create',
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => EventCreatePage()));
+            },
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.login),
+            backgroundColor: Colors.deepOrange,
+            foregroundColor: Colors.white,
+            label: 'Join',
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => JoinGroup()));
+            },
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.search),
+            backgroundColor: Colors.indigo,
+            foregroundColor: Colors.white,
+            label: 'Search',
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => EventSearchPage()));
+            },
+          ),
+        ],
       ),
       bottomNavigationBar: Navbar(
         navigationIndex: 1,

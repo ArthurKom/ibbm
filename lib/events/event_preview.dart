@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
-import 'event_menu.dart';
+import 'events.dart';
 import 'event_view.dart';
 
 class EventPreview extends StatefulWidget {
@@ -24,7 +24,7 @@ class EventPreview extends StatefulWidget {
   State<StatefulWidget> createState() => EventPreviewState();
 }
 
-enum DisplayType { Invitation, Joinable, Details, SendRequest, ReceivedRequest }
+enum DisplayType { Invitation, Joinable, Details }
 
 class EventPreviewState extends State<EventPreview> {
   bool isVisible = true;
@@ -38,6 +38,17 @@ class EventPreviewState extends State<EventPreview> {
         constraints: BoxConstraints(minHeight: 50),
         alignment: Alignment.center,
         decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 10.0,
+              spreadRadius: 1.0,
+              offset: Offset(
+                4.0,
+                4.0,
+              ),
+            )
+          ],
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
@@ -162,7 +173,7 @@ class EventPreviewState extends State<EventPreview> {
                           )
                         );
                       },
-                      child: Text("Request Join")),
+                      child: Text("Join")),
                   ),
                 ],
               )
@@ -194,8 +205,7 @@ class EventPreviewState extends State<EventPreview> {
                 ],
               )
             ]
-            else if (widget.displayType == DisplayType.Invitation ||
-                  widget.displayType == DisplayType.ReceivedRequest) ...[
+            else if (widget.displayType == DisplayType.Invitation) ...[
               Divider(
                 color: Colors.black54,
                 thickness: 1,
@@ -258,39 +268,6 @@ class EventPreviewState extends State<EventPreview> {
                 ),
               ),
             ]
-              else if (widget.displayType == DisplayType.SendRequest) ...[
-                  Divider(
-                    color: Colors.black54,
-                    thickness: 1,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 0),
-                    decoration: BoxDecoration(),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isVisible = false;
-                              });
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.close,
-                                  color: Colors.red,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text("Withdraw"),
-                              ],
-                            )),
-                      ],
-                    ),
-                  ),
-                ]
           ],
         )),
     );

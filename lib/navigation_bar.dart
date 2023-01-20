@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:swipe_eat/events/event_invitations.dart';
 import 'package:swipe_eat/events/event_list.dart';
+import 'package:swipe_eat/settings/settings_main.dart';
+import 'package:swipe_eat/settings/settings_subscription.dart';
 import 'events/event_search.dart';
 
 class Navbar extends StatefulWidget {
@@ -40,7 +42,7 @@ class NavbarState extends State<Navbar> {
           else if (index == 3) {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => EventSearchPage())
+                builder: (context) => SettingsMainPage())
             );
           }
         });

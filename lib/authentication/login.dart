@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../events/event_menu.dart';
+import 'package:swipe_eat/events/event_search.dart';
 import 'register_base.dart';
 
 class LoginPage extends StatefulWidget {
@@ -126,7 +126,7 @@ class LoginState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EventMenuPage()));
+                                  builder: (context) => EventSearchPage()));
                         },
                         child: const Text('Login'),
                         style: ElevatedButton.styleFrom(
